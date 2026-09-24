@@ -55,20 +55,7 @@ def load_topics():
 
 TOPIC_SPECS = load_topics()
 
-EUROPE = {
-    "AL":{"name":"🇦🇱 Albania"},"AD":{"name":"🇦🇩 Andorra"},"AT":{"name":"🇦🇹 Austria"},"BY":{"name":"🇧🇾 Belarus"},
-    "BE":{"name":"🇧🇪 Belgium"},"BA":{"name":"🇧🇦 Bosnia and Herzegovina"},"BG":{"name":"🇧🇬 Bulgaria"},"HR":{"name":"🇭🇷 Croatia"},
-    "CY":{"name":"🇨🇾 Cyprus"},"CZ":{"name":"🇨🇿 Czechia"},"DK":{"name":"🇩🇰 Denmark"},"EE":{"name":"🇪🇪 Estonia"},
-    "FI":{"name":"🇫🇮 Finland"},"FR":{"name":"🇫🇷 France"},"DE":{"name":"🇩🇪 Germany"},"GR":{"name":"🇬🇷 Greece"},
-    "HU":{"name":"🇭🇺 Hungary"},"IS":{"name":"🇮🇸 Iceland"},"IE":{"name":"🇮🇪 Ireland"},"IT":{"name":"🇮🇹 Italy"},
-    "LV":{"name":"🇱🇻 Latvia"},"LI":{"name":"🇱🇮 Liechtenstein"},"LT":{"name":"🇱🇹 Lithuania"},"LU":{"name":"🇱🇺 Luxembourg"},
-    "MT":{"name":"🇲🇹 Malta"},"MD":{"name":"🇲🇩 Moldova"},"MC":{"name":"🇲🇨 Monaco"},"ME":{"name":"🇲🇪 Montenegro"},
-    "NL":{"name":"🇳🇱 Netherlands"},"MK":{"name":"🇲🇰 North Macedonia"},"NO":{"name":"🇳🇴 Norway"},"PL":{"name":"🇵🇱 Poland"},
-    "PT":{"name":"🇵🇹 Portugal"},"RO":{"name":"🇷🇴 Romania"},"SM":{"name":"🇸🇲 San Marino"},"RS":{"name":"🇷🇸 Serbia"},
-    "SK":{"name":"🇸🇰 Slovakia"},"SI":{"name":"🇸🇮 Slovenia"},"ES":{"name":"🇪🇸 Spain"},"SE":{"name":"🇸🇪 Sweden"},
-    "CH":{"name":"🇨🇭 Switzerland"},"UA":{"name":"🇺🇦 Ukraine"},"GB":{"name":"🇬🇧 United Kingdom"},"VA":{"name":"🇻🇦 Vatican City"}
-}
-
+EUROPE = {\n    "DE": {"name": "🇩🇪 Deutschland"}\n}\n
 
 def city_key(name):
     return re.sub(r"[^a-z0-9]+", "_", name.casefold()).strip("_")
