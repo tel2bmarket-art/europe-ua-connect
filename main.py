@@ -292,12 +292,13 @@ STORE = Store(DATABASE_URL)
 def user_lang(update):
     code = (getattr(update.effective_user, "language_code", "") or "en").lower()
     if code.startswith("uk"): return "uk"
+    if code.startswith("ru"): return "ru"
     if code.startswith("de"): return "de"
     return "en"
 
 
-def tr(lang, de, uk, en):
-    return {"de": de, "uk": uk, "en": en}.get(lang, en)
+def tr(lang, de, uk, ru, en):
+    return {"de": de, "uk": uk, "ru": ru, "en": en}.get(lang, en)
 
 
 def country_keyboard():
@@ -318,7 +319,7 @@ def city_keyboard(code):
 
 async def location_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.effective_message.reply_text(
-        f"🇺🇦 EuropeUAConnectBot\n\n🌍 {tr(user_lang(update), 'Land auswählen:', 'Оберіть країну:', 'Choose your country:')}",
+        f"🇺🇦 EuropeUAConnectBot\n\n🌍 {tr(user_lang(update), 'Land auswählen:', 'Оберіть країну:', 'Выберите страну:', 'Choose your country:')}",
         reply_markup=country_keyboard(),
     )
 
@@ -328,7 +329,7 @@ async def location_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
     data = query.data or ""
     if data == "countries":
-        await query.edit_message_text("🌍 " + tr(user_lang(update), "Land auswählen:", "Оберіть країну:", "Choose your country:"), reply_markup=country_keyboard())
+        await query.edit_message_text("🌍 " + tr(user_lang(update), "Land auswählen:", "Оберіть країну:", "Выберите страну:", "Choose your country:"), reply_markup=country_keyboard())
         return
     if data.startswith("country:"):
         code = data.split(":", 1)[1]
@@ -336,7 +337,7 @@ async def location_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             context.user_data["country_code"] = code
             context.user_data["awaiting_postal"] = True
             await query.edit_message_text(
-                f'{EUROPE[code]["name"]}\n\n📮 {tr(user_lang(update), "Bitte PLZ eingeben:", "Введіть поштовий індекс:", "Enter your postal code:")}'
+                f'{EUROPE[code]["name"]}\n\n📮 {tr(user_lang(update), "Bitte PLZ eingeben:", "Введіть поштовий індекс:", "Введите почтовый индекс:", "Enter your postal code:")}'
             )
         return
     if data.startswith("city:"):
