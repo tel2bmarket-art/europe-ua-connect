@@ -1,5 +1,3 @@
-[Reading 683 lines from start (total: 683 lines, 0 remaining)]
-
 import json
 import os
 import re
@@ -683,4 +681,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
