@@ -382,41 +382,11 @@ async def postal_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     places = postal_lookup(code, postal)
     if not places:
         await update.effective_message.reply_text(
-            "❌ PLZ nicht gefunden. Bitte erneut eingeben oder /location für anderes Land."
+            tr(user_lang(update), "❌ PLZ nicht gefunden. Bitte erneut eingeben.", "❌ Поштовий індекс не знайдено. Введіть ще раз.", "❌ Почтовый индекс не найден. Введите ещё раз.", "❌ Postal code not found. Please try again.")
         )
         return
     context.user_data["awaiting_postal"] = False
-    context.user_data["postal_code"] = postal
-    if len(places) > 1:
-        unique = []
-        seen = set()
-        for item in places:
-            sig = (item["city"], item.get("region"))
-            if sig not in seen:
-                seen.add(sig); unique.append(item)
-        if len(unique) > 1:
-            rows = [[InlineKeyboardButton(
-                f'{p["city"]}' + (f' · {p["region"]}' if p.get("region") else ""),
-                callback_data=f"place:{i}"
-            )] for i, p in enumerate(unique[:20])]
-            context.user_data["postal_places"] = unique[:20]
-            await update.effective_message.reply_text(
-                tr(user_lang(update), "Mehrere Orte gefunden. Bitte auswählen:", "Знайдено кілька населених пунктів. Оберіть:", "Найдено несколько населённых пунктов. Выберите:", "Several places found. Please choose:"),
-                reply_markup=InlineKeyboardMarkup(rows),
-            )
-            return
-        places = unique
-    place = places[0]
-    await finish_place(update, context, code, postal, place)
-    context.user_data["forum_key"] = forum_key
-    region = f' · {place["region"]}' if place["region"] else ""
-    rows = [[InlineKeyboardButton(f"Thread {i}", callback_data=f"thread:{i}")] for i in range(1, 11)]
-    rows.append([InlineKeyboardButton("🌍 Land / PLZ wechseln", callback_data="countries")])
-    await update.effective_message.reply_text(
-        f"✅ {EUROPE[code]['name']} → {postal} → {place['city']}{region}\n\n"
-        "Lokales Forum · Thema auswählen:",
-        reply_markup=InlineKeyboardMarkup(rows),
-    )
+    await finish_place(update, context, code, postal, places[0])
 
 
 async def thread_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -720,7 +690,6 @@ def main():
     app.add_handler(CommandHandler("location", location_menu))
     app.add_handler(CallbackQueryHandler(location_callback, pattern=r"^(countries|country:|city:)"))
     app.add_handler(CallbackQueryHandler(thread_callback, pattern=r"^thread:"))
-    app.add_handler(CallbackQueryHandler(place_callback, pattern=r"^place:"))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, postal_message))
     app.add_handler(CommandHandler("forum_setup", forum_setup))
     app.add_handler(CommandHandler("forum_topics", forum_topics))
