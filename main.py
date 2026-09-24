@@ -55,7 +55,9 @@ def load_topics():
 
 TOPIC_SPECS = load_topics()
 
-EUROPE = {\n    "DE": {"name": "🇩🇪 Deutschland"}\n}
+EUROPE = {
+    "DE": {"name": "🇩🇪 Deutschland"}
+}
 
 def city_key(name):
     return re.sub(r"[^a-z0-9]+", "_", name.casefold()).strip("_")
