@@ -55,13 +55,18 @@ def load_topics():
 
 TOPIC_SPECS = load_topics()
 
-# Phase 1: Ukrainians in Europe. The catalogue is intentionally simple and expandable.
 EUROPE = {
-    "DE": {"name": "🇩🇪 Deutschland", "cities": ["Berlin", "München", "Hamburg", "Köln", "Münster"]},
-    "PL": {"name": "🇵🇱 Polen", "cities": ["Warschau", "Krakau", "Breslau", "Danzig"]},
-    "ES": {"name": "🇪🇸 Spanien", "cities": ["Barcelona", "Madrid", "Valencia", "Alicante"]},
-    "NL": {"name": "🇳🇱 Niederlande", "cities": ["Amsterdam", "Rotterdam", "Den Haag", "Eindhoven"]},
-    "CZ": {"name": "🇨🇿 Tschechien", "cities": ["Prag", "Brünn"]},
+    "AL":{"name":"🇦🇱 Albania"},"AD":{"name":"🇦🇩 Andorra"},"AT":{"name":"🇦🇹 Austria"},"BY":{"name":"🇧🇾 Belarus"},
+    "BE":{"name":"🇧🇪 Belgium"},"BA":{"name":"🇧🇦 Bosnia and Herzegovina"},"BG":{"name":"🇧🇬 Bulgaria"},"HR":{"name":"🇭🇷 Croatia"},
+    "CY":{"name":"🇨🇾 Cyprus"},"CZ":{"name":"🇨🇿 Czechia"},"DK":{"name":"🇩🇰 Denmark"},"EE":{"name":"🇪🇪 Estonia"},
+    "FI":{"name":"🇫🇮 Finland"},"FR":{"name":"🇫🇷 France"},"DE":{"name":"🇩🇪 Germany"},"GR":{"name":"🇬🇷 Greece"},
+    "HU":{"name":"🇭🇺 Hungary"},"IS":{"name":"🇮🇸 Iceland"},"IE":{"name":"🇮🇪 Ireland"},"IT":{"name":"🇮🇹 Italy"},
+    "LV":{"name":"🇱🇻 Latvia"},"LI":{"name":"🇱🇮 Liechtenstein"},"LT":{"name":"🇱🇹 Lithuania"},"LU":{"name":"🇱🇺 Luxembourg"},
+    "MT":{"name":"🇲🇹 Malta"},"MD":{"name":"🇲🇩 Moldova"},"MC":{"name":"🇲🇨 Monaco"},"ME":{"name":"🇲🇪 Montenegro"},
+    "NL":{"name":"🇳🇱 Netherlands"},"MK":{"name":"🇲🇰 North Macedonia"},"NO":{"name":"🇳🇴 Norway"},"PL":{"name":"🇵🇱 Poland"},
+    "PT":{"name":"🇵🇹 Portugal"},"RO":{"name":"🇷🇴 Romania"},"SM":{"name":"🇸🇲 San Marino"},"RS":{"name":"🇷🇸 Serbia"},
+    "SK":{"name":"🇸🇰 Slovakia"},"SI":{"name":"🇸🇮 Slovenia"},"ES":{"name":"🇪🇸 Spain"},"SE":{"name":"🇸🇪 Sweden"},
+    "CH":{"name":"🇨🇭 Switzerland"},"UA":{"name":"🇺🇦 Ukraine"},"GB":{"name":"🇬🇧 United Kingdom"},"VA":{"name":"🇻🇦 Vatican City"}
 }
 
 
@@ -306,15 +311,6 @@ def country_keyboard():
         [InlineKeyboardButton(data["name"], callback_data=f"country:{code}")]
         for code, data in EUROPE.items()
     ])
-
-
-def city_keyboard(code):
-    rows = [
-        [InlineKeyboardButton(city, callback_data=f"city:{code}:{city_key(city)}")]
-        for city in EUROPE[code]["cities"]
-    ]
-    rows.append([InlineKeyboardButton("⬅️ Länder", callback_data="countries")])
-    return InlineKeyboardMarkup(rows)
 
 
 async def location_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
